@@ -35,6 +35,10 @@ struct HabitView: View{
     var body: some View{
         
         let habitStreak = getHabitStreak(for: habit)
+        let today = Date()
+        let isCompletedToday = habit.history.keys.contains {
+            Calendar.current.isDate($0, inSameDayAs: today)
+        }
         
         VStack (){
             
@@ -50,7 +54,7 @@ struct HabitView: View{
             }
             .padding(.vertical, 16)
             
-            LockCardView(statusText: statusText, titleText: "Habit", subtitleText: habit.name)
+            LockCardView(statusText: (isCompletedToday ? "LockedIn" : "UnLocked"), titleText: "Habit", subtitleText: habit.name)
             
             
             // Habit Type Side by Side
@@ -97,6 +101,20 @@ struct HabitView: View{
                                 .padding(.bottom, 10)
                                 .onTapGesture {
                                     isRed.toggle()
+                                    
+                                    let calendar = Calendar.current
+                                    let today = calendar.startOfDay(for: Date())
+
+                                    if habit.history[today] == true {
+                                        // Uncheck: remove today's entry
+                                        habit.history.removeValue(forKey: today)
+                                    } else {
+                                        // Check: mark today as complete
+                                        habit.history[today] = true
+                                    }
+
+                                    // Notify parent
+                                    onUpdate(habit)
 
                                     let generator = UIImpactFeedbackGenerator(style: .medium)
                                     generator.impactOccurred()
