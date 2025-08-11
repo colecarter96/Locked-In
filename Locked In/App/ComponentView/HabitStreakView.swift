@@ -27,6 +27,7 @@ struct HabitStreakView: View{
                 
                 Text(habitType)
                     .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                    .foregroundStyle(.black)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                     .padding(13)
             }
@@ -44,6 +45,7 @@ struct HabitStreakView: View{
                 
                 Text(currStreak)
                     .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                    .foregroundStyle(.black)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                     .padding(13)
             }

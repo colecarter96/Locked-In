@@ -15,7 +15,8 @@ struct HabitView: View{
     
   
 
-    
+    @Binding var selectedTab: Int
+    var habitCount: Int
     // Lock Box vars
     var statusText: String
     
@@ -35,24 +36,31 @@ struct HabitView: View{
     var body: some View{
         
         let habitStreak = getHabitStreak(for: habit)
-        let today = Date()
-        let isCompletedToday = habit.history.keys.contains {
-            Calendar.current.isDate($0, inSameDayAs: today)
+//        let today = Date()
+//        let isCompletedToday = habit.history.keys.contains {
+//            Calendar.current.isDate($0, inSameDayAs: today)
+//        }
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let isCompletedToday = habit.history.contains { date, completed in
+            completed && calendar.isDate(date, inSameDayAs: today)
         }
         
         VStack (){
             
             // Top Circles
-            HStack (spacing: 90) {
-                Circle()
-                    .fill(Color.gray)
-                    .frame(width: 8, height: 8)
-                Circle()
-                    .fill(Color.black)
-                    .frame(width: 8, height: 8)
-                
-            }
-            .padding(.vertical, 16)
+//            HStack (spacing: 90) {
+//                Circle()
+//                    .fill(Color.gray)
+//                    .frame(width: 8, height: 8)
+//                Circle()
+//                    .fill(Color.black)
+//                    .frame(width: 8, height: 8)
+//                
+//            }
+//            .padding(.vertical, 16)
+            
+            CirclesNavView(currTab: $selectedTab, totalPages: habitCount)
             
             LockCardView(statusText: (isCompletedToday ? "LockedIn" : "UnLocked"), titleText: "Habit", subtitleText: habit.name)
             
@@ -95,12 +103,12 @@ struct HabitView: View{
                     GeometryReader { geo in
                         ZStack{
                             Circle()
-                                .fill(isRed ? .red : Color(red: 0.15, green: 0.15, blue: 0.15, opacity: 1.0))
+                                .fill(isCompletedToday ? .red : Color(red: 0.15, green: 0.15, blue: 0.15, opacity: 1.0))
                                 .frame(width: geo.size.width * 0.85, height: geo.size.width * 0.85) // limit max size if you want
                                 .position(x: geo.size.width / 2, y: geo.size.height / 2) // center the circle inside its geometry reader
                                 .padding(.bottom, 10)
                                 .onTapGesture {
-                                    isRed.toggle()
+//                                    isRed.toggle()
                                     
                                     let calendar = Calendar.current
                                     let today = calendar.startOfDay(for: Date())
@@ -122,7 +130,7 @@ struct HabitView: View{
     //                                lockedIn.toggle()
                                 }
                             
-                            Text("Lock")
+                            Text(isCompletedToday ? "UnLock" : "Lock")
                                 .font(.pretendard(fontStyle: .title3, fontWeight: .semibold))
                                 .foregroundColor(Color.white)
                         }
@@ -138,48 +146,81 @@ struct HabitView: View{
                         .frame(maxHeight: .infinity)
                     
                     
-                    GeometryReader { geo in
-                        Button(action:  {
-                            showingEditForm = true
-                        }) {
-                            Image(systemName: "ellipsis")
-                                .foregroundStyle(.black)
-                                .font(.largeTitle)
-                                .position(x: geo.size.width / 2, y: geo.size.height / 2) // center the image inside geometry reader
-                        }
-                        .sheet(isPresented: $showingEditForm) {
-//                            AddHabitFormView(habitToEdit: habit) { updatedHabit in
-//                                print("Habit returned \(updatedHabit.name)")
-//                                habit = updatedHabit
-//                                showingEditForm = false
-//                            }
-                            
-//                            AddHabitFormView(habitToEdit: habit, onSubmit: { updatedHabit in
-//                                habit = updatedHabit
-//                                onUpdate(updatedHabit)
-//                                showingEditForm = false
-//                            }, onDelete: {
-//                                // Remove habit from wherever you're storing it
-//                                print("Habit deleted")
-//                                onDelete(habit)
-//                                showingEditForm = false
-//                            })
-                            AddHabitFormView(
-                                habitToEdit: habit,
-                                onSubmit: { updatedHabit in
-                                    onUpdate(updatedHabit)   // Triggers update in parent
-                                    showingEditForm = false
-                                },
-                                onDelete: {
-                                    onDelete(habit)          // Triggers delete in parent
-                                    showingEditForm = false
-                                }
-                            )
-                        }
-                        
+//                    GeometryReader { geo in
+//                        Button(action:  {
+//                            showingEditForm = true
+//                        }) {
+//                            Image(systemName: "ellipsis")
+//                                .foregroundStyle(.black)
+//                                .font(.largeTitle)
+//                                .position(x: geo.size.width / 2, y: geo.size.height / 2) // center the image inside geometry reader
+//                        }
+//                        .sheet(isPresented: $showingEditForm) {
+////                            AddHabitFormView(habitToEdit: habit) { updatedHabit in
+////                                print("Habit returned \(updatedHabit.name)")
+////                                habit = updatedHabit
+////                                showingEditForm = false
+////                            }
+//                            
+////                            AddHabitFormView(habitToEdit: habit, onSubmit: { updatedHabit in
+////                                habit = updatedHabit
+////                                onUpdate(updatedHabit)
+////                                showingEditForm = false
+////                            }, onDelete: {
+////                                // Remove habit from wherever you're storing it
+////                                print("Habit deleted")
+////                                onDelete(habit)
+////                                showingEditForm = false
+////                            })
+//                            AddHabitFormView(
+//                                habitToEdit: habit,
+//                                onSubmit: { updatedHabit in
+//                                    onUpdate(updatedHabit)   // Triggers update in parent
+//                                    showingEditForm = false
+//                                },
+//                                onDelete: {
+//                                    onDelete(habit)          // Triggers delete in parent
+//                                    showingEditForm = false
+//                                }
+//                            )
+//                        }
+//                        
+////
+//                    }
+//                    .frame(minWidth: 0, maxWidth: .infinity) // take up all right space
 //
+                    GeometryReader { geo in
+                        ZStack {
+                            Button(action: {
+                                showingEditForm = true
+                            }) {
+                                Image(systemName: "ellipsis")
+                                    .foregroundStyle(.black)
+                                    .font(.largeTitle)
+                                    // Small fixed frame for tap area roughly the icon size
+                                    .frame(width: 44, height: 44)
+                            }
+                            .sheet(isPresented: $showingEditForm) {
+                                AddHabitFormView(
+                                    habitToEdit: habit,
+                                    onSubmit: { updatedHabit in
+                                        onUpdate(updatedHabit)   // Triggers update in parent
+                                        showingEditForm = false
+                                    },
+                                    onDelete: {
+                                        onDelete(habit)          // Triggers delete in parent
+                                        showingEditForm = false
+                                    }
+                                )
+                            }
+                            .contentShape(Rectangle())  // hit testing limited to this frame
+                            // Center the button inside the GeometryReader
+                            .position(x: geo.size.width / 2, y: geo.size.height / 2)
+                        }
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity) // take up all right space
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    
+                    
                 }
                 .ignoresSafeArea()
                 
@@ -191,13 +232,37 @@ struct HabitView: View{
 
     }
     
+//    func getHabitStreak(for habit: Habit) -> Int {
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: Date())
+//        var streak = 0
+//
+//        for offset in 0..<365 {
+//            guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { break }
+//
+//            let completed = habit.history.contains { key, value in
+//                value && calendar.isDate(key, inSameDayAs: date)
+//            }
+//
+//            if completed {
+//                streak += 1
+//            } else {
+//                break
+//            }
+//        }
+//
+//        return streak
+//    }
+    
     func getHabitStreak(for habit: Habit) -> Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
         var streak = 0
 
+        // Step 1: Count consecutive days starting from yesterday
         for offset in 0..<365 {
-            guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { break }
+            guard let date = calendar.date(byAdding: .day, value: -offset, to: yesterday) else { break }
 
             let completed = habit.history.contains { key, value in
                 value && calendar.isDate(key, inSameDayAs: date)
@@ -210,9 +275,17 @@ struct HabitView: View{
             }
         }
 
+        // Step 2: If today is completed, add it to the streak
+        let todayCompleted = habit.history.contains { key, value in
+            value && calendar.isDate(key, inSameDayAs: today)
+        }
+
+        if todayCompleted {
+            streak += 1
+        }
+
         return streak
     }
-
 }
 
 

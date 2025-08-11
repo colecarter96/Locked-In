@@ -36,9 +36,11 @@ struct LockCardView: View {
             VStack(alignment: .leading, spacing: 0){
                 Text(titleText)
                     .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                    .foregroundStyle(.black)
                 
                 Text(subtitleText)
                     .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                    .foregroundStyle(.black)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             .padding(15)

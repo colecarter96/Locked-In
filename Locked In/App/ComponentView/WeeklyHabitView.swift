@@ -19,21 +19,24 @@ struct WeeklyHabitView : View {
                 .fill(Color(red: 0.99, green: 0.99, blue: 0.99))
                 .frame(height: 150)
 
-            Text(habitName)
+            Text(habitState)
                 .font(.pretendard(fontStyle: .subheadline, fontWeight: .regular))
                 .foregroundColor(Color.gray)
                 .padding(13)
 
-            Text(habitState)
+            Text(habitName)
                 .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                .foregroundStyle(.black)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .padding(13)
+            
 
             // Bars for each day
             HStack {
                 ForEach(0..<7, id: \.self) { index in
                     if dayCompletionFlags[index] {
                         Rectangle()
+                            .fill(.black)
                             .frame(width: 3, height: 40)
                     } else {
                         Rectangle()

@@ -23,6 +23,13 @@
         }
     }
 
+    extension Date {
+        func strippedTime() -> Date {
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+            return Calendar.current.date(from: components)!
+        }
+    }
+
 
     struct Habit: Identifiable, Equatable, Codable {
         let id: UUID
@@ -30,6 +37,11 @@
         var streakGoal: Int
         var frequency: Frequency
         var history: [Date: Bool]
+        
+        var isCompletedToday: Bool {
+            let today = Date().strippedTime()
+            return history[today] ?? false
+        }
         
         enum Frequency: Codable, Equatable {
             case daily
@@ -162,6 +174,9 @@
 
             return dates
         }
+        
+        
+
 
 
 

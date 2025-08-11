@@ -14,6 +14,8 @@ struct HomeView: View{
     
     let habits: [Habit]
     
+    @Binding var selectedTab: Int
+    
     var body: some View {
         
         let dailyCompletions = getLast28DaysCompletionStatus(habits: habits)
@@ -24,48 +26,67 @@ struct HomeView: View{
             VStack (){
                     
                 // Top Circles
-                HStack (spacing: 90) {
-                    Circle()
-                        .fill(Color.gray)
-                        .frame(width: 8, height: 8)
-                    Circle()
-                        .fill(Color.black)
-                        .frame(width: 8, height: 8)
-                    
-                }
-                .padding(.vertical, 16)
+//                HStack (spacing: 90) {
+//                    Circle()
+//                        .fill(Color.gray)
+//                        .frame(width: 8, height: 8)
+//                    Circle()
+//                        .fill(Color.black)
+//                        .frame(width: 8, height: 8)
+//                    
+//                }
+//                .padding(.vertical, 16)
+                
+                CirclesNavView(currTab: $selectedTab, totalPages: habits.count + 2)
                 
                 LockCardView(statusText: "LockedIn", titleText: "\(lockedInStreak)", subtitleText: "Days Locked")
+                
+                
+                    
+                
+                ForEach(habits.indices, id: \.self) { index in
+                    Button {
+                        selectedTab = index + 1  // +1 because 0 = HomeView
+                    } label: {
+                        WeeklyHabitView(
+                            habitName: habits[index].name,
+                            habitState: "UnLocked",
+                            dayCompletionFlags: getCurrentWeekCompletionStatus(for: habits[index])
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+                
+                if habits.isEmpty {
+                    Button {
+                        selectedTab = habits.count + 1 // last page is AddView in your pager
+                    } label: {
+                        WeeklyHabitView(
+                            habitName: "Click here to create a new habit",
+                            habitState: "LockedIn",
+                            dayCompletionFlags: Array(repeating: false, count: 7) // empty week
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .transition(.opacity) // or .slide
+                    .animation(.easeInOut, value: habits)
+                }
                     
                 
                 
-                if habits.count > 0 {
-                    WeeklyHabitView(
-                        habitName: habits[0].name,
-                        habitState: "UnLocked",
-                        dayCompletionFlags: getCurrentWeekCompletionStatus(for: habits[0])
-                    )
-                }
-                if habits.count > 1 {
-                    WeeklyHabitView(
-                        habitName: habits[1].name,
-                        habitState: "UnLocked",
-                        dayCompletionFlags: getCurrentWeekCompletionStatus(for: habits[1])
-                    )
+                if !habits.isEmpty {
+                    MonthlyStreakView(dailyCompletionFlags: dailyCompletions)
+                        .transition(.opacity) // or .slide
+                        .animation(.easeInOut, value: habits)
                 }
                 
-//                WeeklyHabitView(habitName: habit1Name, habitState: habit1State)
-//                
-//                WeeklyHabitView(habitName: habit1Name, habitState: habit1State)
-                
-                MonthlyStreakView(dailyCompletionFlags: dailyCompletions)
                 
             }
-            .background(Color(red: 0.92, green: 0.92, blue:0.92, opacity: 1.0))
+            .background(Color(red: 0.90, green: 0.90, blue:0.90, opacity: 1.0))
             .frame(maxWidth: .infinity, alignment: .top)
                 
         }
-        .background(Color(red: 0.92, green: 0.92, blue:0.92, opacity: 1.0))
+        .background(Color(red: 0.90, green: 0.90, blue:0.90, opacity: 1.0))
         .frame(maxWidth: .infinity, alignment: .top)
         .scrollIndicators(.hidden) // hides scrollbars
         
@@ -77,6 +98,9 @@ struct HomeView: View{
 
     
     func getLast28DaysCompletionStatus(habits: [Habit]) -> [Bool?] {
+        
+        guard !habits.isEmpty else { return [] }
+        
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
 
@@ -113,6 +137,10 @@ struct HomeView: View{
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         var streak = 0
+        
+        if habits.count == 0 {
+            return 0
+        }
 
         for offset in 0..<365 { // Arbitrary upper limit
             guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { break }

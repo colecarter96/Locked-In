@@ -9,9 +9,14 @@ import SwiftUI
 
 struct AddView: View {
     
+//    @Binding var selectedTab: Int
+    
     var onAddHabit: (Habit) -> Void
     
     @State private var showingForm = false
+    
+    @Binding var selectedTab: Int
+    var habitCount: Int
     
     
     
@@ -19,16 +24,18 @@ struct AddView: View {
         VStack (){
                 
             // Top Circles
-            HStack (spacing: 90) {
-                Circle()
-                    .fill(Color.gray)
-                    .frame(width: 8, height: 8)
-                Circle()
-                    .fill(Color.black)
-                    .frame(width: 8, height: 8)
-                
-            }
-            .padding(.vertical, 16)
+//            HStack (spacing: 90) {
+//                Circle()
+//                    .fill(Color.gray)
+//                    .frame(width: 8, height: 8)
+//                Circle()
+//                    .fill(Color.black)
+//                    .frame(width: 8, height: 8)
+//                
+//            }
+//            .padding(.vertical, 16)
+            
+            CirclesNavView(currTab: $selectedTab, totalPages: habitCount)
             
             ZStack (alignment: .topLeading){
                 RoundedRectangle(cornerRadius: 20)
@@ -62,9 +69,11 @@ struct AddView: View {
                 VStack(alignment: .leading, spacing: 0){
                     Text("Add")
                         .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                        .foregroundStyle(.black)
                     
                     Text("Lock In New Habit")
                         .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                        .foregroundStyle(.black)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .padding(15)
@@ -75,7 +84,7 @@ struct AddView: View {
             Spacer()
             
         }
-        .background(Color(red: 0.92, green: 0.92, blue:0.92, opacity: 1.0))
+        .background(Color(red: 0.90, green: 0.90, blue:0.90, opacity: 1.0))
         .frame(maxWidth: .infinity, alignment: .top)
     }
 }

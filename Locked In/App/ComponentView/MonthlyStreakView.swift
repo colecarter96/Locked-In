@@ -35,7 +35,7 @@ struct MonthlyStreakView: View {
                         ForEach(0..<7, id: \.self) { dayIndex in
                             let index = weekIndex * 7 + dayIndex
                             Circle()
-                                .fill(index < dailyCompletionFlags.count ? colorForCompletion(dailyCompletionFlags[index]) : Color.gray.opacity(0.1))
+                                .fill(dailyCompletionFlags.isEmpty ? Color.gray.opacity(0.1) : (index < dailyCompletionFlags.count ? colorForCompletion(dailyCompletionFlags[index]) : Color.gray.opacity(0.1)))
                                 .frame(width: 40, height: 40)
                                 .padding(.horizontal, 1)
                         }
@@ -47,8 +47,8 @@ struct MonthlyStreakView: View {
 
             VStack(alignment: .leading) {
                 Text("Locked Streak")
-                    .font(.pretendard(fontStyle: .title3, fontWeight: .regular))
-                    .foregroundColor(Color.black.opacity(0.8))
+                    .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
+                    .foregroundColor(Color.black.opacity(1.0))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             .padding(15)
