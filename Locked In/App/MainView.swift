@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State private var selectedTab = 0 // index of the current tab
+    @State private var selectedTab = 1 // index of the current tab
+    
+    
         
     private let totalTabs = 4 // adjust if you add more views
     
@@ -20,9 +22,17 @@ struct MainView: View {
         
         
        
-            
+       
         
         CustomPagerView(currentIndex: $selectedTab, totalPages: 2 + habitStore.habits.count) {
+            
+            MissionControlView(
+                onAddHabit: { newHabit in
+                    print("MainView received new habit: \(newHabit.name)")
+                    habitStore.addHabit(newHabit)
+                },
+                selectedTab: $selectedTab
+            )
             
             HomeView(habit1Name: "Read 30 Mins",
                      habit1State: "UnLocked",
@@ -46,15 +56,16 @@ struct MainView: View {
                 )
             }
             
-            AddView(
-                onAddHabit: { newHabit in
-                    print("MainView received new habit: \(newHabit.name)")
-                    habitStore.addHabit(newHabit)
-                },
-                selectedTab: $selectedTab,
-                habitCount: habitStore.habits.count + 2
-            )
+//            AddView(
+//                onAddHabit: { newHabit in
+//                    print("MainView received new habit: \(newHabit.name)")
+//                    habitStore.addHabit(newHabit)
+//                },
+//                selectedTab: $selectedTab,
+//                habitCount: habitStore.habits.count + 3
+//            )
         }
+        .background(Color(red: 0.97, green: 0.97, blue: 0.97, opacity: 1.0))
         
     }
 //        ZStack{
@@ -82,7 +93,11 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
+        
+        let themeManager = ThemeManager()  // <-- create a real instance here
+        
         MainView()
             .environmentObject(HabitStore()) // Required for preview
+            .environmentObject(themeManager)
     }
 }

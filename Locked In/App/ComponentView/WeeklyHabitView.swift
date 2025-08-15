@@ -12,23 +12,27 @@ struct WeeklyHabitView : View {
     var habitName: String
     var habitState: String
     var dayCompletionFlags: [Bool] // 7 elements: Sunday to Saturday
+    
+    @EnvironmentObject var themeManager : ThemeManager
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color(red: 0.99, green: 0.99, blue: 0.99))
+                .fill(themeManager.cardColor)
                 .frame(height: 150)
 
             Text(habitState)
                 .font(.pretendard(fontStyle: .subheadline, fontWeight: .regular))
-                .foregroundColor(Color.gray)
+                .foregroundColor(themeManager.habitStatus)
                 .padding(13)
+                .allowsHitTesting(false)
 
             Text(habitName)
                 .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
-                .foregroundStyle(.black)
+                .foregroundStyle(themeManager.textColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .padding(13)
+                .allowsHitTesting(false)
             
 
             // Bars for each day
@@ -36,7 +40,7 @@ struct WeeklyHabitView : View {
                 ForEach(0..<7, id: \.self) { index in
                     if dayCompletionFlags[index] {
                         Rectangle()
-                            .fill(.black)
+                            .fill(themeManager.textColor)
                             .frame(width: 3, height: 40)
                     } else {
                         Rectangle()
@@ -48,6 +52,7 @@ struct WeeklyHabitView : View {
             .frame(maxWidth: .infinity, alignment: .topTrailing)
             .padding(.trailing, 30)
             .padding(.top, 30)
+            .allowsHitTesting(false)
         }
         .frame(height: 150)
         .padding(.horizontal, 30)

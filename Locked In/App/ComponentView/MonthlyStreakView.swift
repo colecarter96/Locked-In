@@ -9,10 +9,13 @@ import SwiftUI
 
 struct MonthlyStreakView: View {
     let dailyCompletionFlags: [Bool?] // nil = future day
+    
+    @EnvironmentObject var themeManager: ThemeManager
+
 
     func colorForCompletion(_ status: Bool?) -> Color {
         if let completed = status {
-            return completed ? Color.black : Color.gray.opacity(0.3)
+            return completed ? themeManager.textColor : Color.gray.opacity(0.3)
         } else {
             return Color.gray.opacity(0.1) // future day = faint gray
         }
@@ -21,12 +24,12 @@ struct MonthlyStreakView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color(red: 0.99, green: 0.99, blue: 0.99))
+                .fill(themeManager.cardColor)
                 .frame(height: 300)
 
             Text("LockedIn")
                 .font(.pretendard(fontStyle: .callout, fontWeight: .regular))
-                .foregroundColor(Color.gray)
+                .foregroundColor(themeManager.habitStatus)
                 .padding(15)
 
             VStack {
@@ -48,7 +51,7 @@ struct MonthlyStreakView: View {
             VStack(alignment: .leading) {
                 Text("Locked Streak")
                     .font(.pretendard(fontStyle: .title3, fontWeight: .medium))
-                    .foregroundColor(Color.black.opacity(1.0))
+                    .foregroundColor(themeManager.textColor)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             .padding(15)

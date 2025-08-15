@@ -11,6 +11,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		372D4C952E4F429F0084F388 /* LockedInWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LockedInWidgets;
+			sourceTree = "<group>";
+		};
 		376708122E3F6C3100A9A8A9 /* Locked In */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Locked In";
@@ -32,6 +37,7 @@
 		376708072E3F6C3100A9A8A9 = {
 			isa = PBXGroup;
 			children = (
+				372D4C952E4F429F0084F388 /* LockedInWidgets */,
 				376708122E3F6C3100A9A8A9 /* Locked In */,
 				376708112E3F6C3100A9A8A9 /* Products */,
 			);
@@ -61,6 +67,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				372D4C952E4F429F0084F388 /* LockedInWidgets */,
 				376708122E3F6C3100A9A8A9 /* Locked In */,
 			);
 			name = "Locked In";

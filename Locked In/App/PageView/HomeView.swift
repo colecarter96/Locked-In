@@ -16,6 +16,8 @@ struct HomeView: View{
     
     @Binding var selectedTab: Int
     
+    @EnvironmentObject var themeManager : ThemeManager
+    
     var body: some View {
         
         let dailyCompletions = getLast28DaysCompletionStatus(habits: habits)
@@ -45,21 +47,32 @@ struct HomeView: View{
                     
                 
                 ForEach(habits.indices, id: \.self) { index in
-                    Button {
-                        selectedTab = index + 1  // +1 because 0 = HomeView
-                    } label: {
-                        WeeklyHabitView(
-                            habitName: habits[index].name,
-                            habitState: "UnLocked",
-                            dayCompletionFlags: getCurrentWeekCompletionStatus(for: habits[index])
-                        )
+//                    Button {
+//                        selectedTab = index + 1  // +1 because 0 = HomeView
+//                    } label: {
+//                        WeeklyHabitView(
+//                            habitName: habits[index].name,
+//                            habitState: "UnLocked",
+//                            dayCompletionFlags: getCurrentWeekCompletionStatus(for: habits[index])
+//                        )
+//                    }
+//                    .buttonStyle(.plain)
+                    
+                    
+                    WeeklyHabitView(
+                        habitName: habits[index].name,
+                        habitState: "UnLocked",
+                        dayCompletionFlags: getCurrentWeekCompletionStatus(for: habits[index])
+                    )
+                    .onTapGesture {
+                        selectedTab = index + 2
                     }
-                    .buttonStyle(.plain)
+                    
                 }
                 
                 if habits.isEmpty {
                     Button {
-                        selectedTab = habits.count + 1 // last page is AddView in your pager
+                        selectedTab = 0 // last page is AddView in your pager
                     } label: {
                         WeeklyHabitView(
                             habitName: "Click here to create a new habit",
@@ -82,11 +95,11 @@ struct HomeView: View{
                 
                 
             }
-            .background(Color(red: 0.90, green: 0.90, blue:0.90, opacity: 1.0))
+            .background(themeManager.backgroundColor)
             .frame(maxWidth: .infinity, alignment: .top)
                 
         }
-        .background(Color(red: 0.90, green: 0.90, blue:0.90, opacity: 1.0))
+        .background(themeManager.backgroundColor)
         .frame(maxWidth: .infinity, alignment: .top)
         .scrollIndicators(.hidden) // hides scrollbars
         
@@ -133,33 +146,70 @@ struct HomeView: View{
         return result
     }
     
+//    func getLockedInStreak(habits: [Habit]) -> Int {
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: Date())
+//        var streak = 0
+//        
+//        if habits.count == 0 {
+//            return 0
+//        }
+//
+//        for offset in 0..<365 { // Arbitrary upper limit
+//            guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { break }
+//
+//            let allComplete = habits.allSatisfy { habit in
+//                habit.history.contains { key, value in
+//                    value && calendar.isDate(key, inSameDayAs: date)
+//                }
+//            }
+//
+//            if allComplete {
+//                streak += 1
+//            } else {
+//                break
+//            }
+//        }
+//
+//        return streak
+//    }
     func getLockedInStreak(habits: [Habit]) -> Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
+        
+        guard habits.count > 0 else { return 0 }
+        
         var streak = 0
         
-        if habits.count == 0 {
-            return 0
-        }
-
-        for offset in 0..<365 { // Arbitrary upper limit
+        // Step 1: Check consecutive days starting **yesterday**
+        for offset in 1..<365 { // start at 1 to skip today
             guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { break }
-
+            
             let allComplete = habits.allSatisfy { habit in
                 habit.history.contains { key, value in
                     value && calendar.isDate(key, inSameDayAs: date)
                 }
             }
-
+            
             if allComplete {
                 streak += 1
             } else {
                 break
             }
         }
-
+        
+        // Step 2: Add today if all habits are completed
+        let todayComplete = habits.allSatisfy { habit in
+            habit.history[today] == true
+        }
+        
+        if todayComplete {
+            streak += 1
+        }
+        
         return streak
     }
+
 
 
     // Gets the start of the week (Sunday) for a given date, offset by a number of weeks

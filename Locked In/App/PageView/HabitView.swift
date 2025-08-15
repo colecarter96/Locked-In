@@ -13,7 +13,7 @@ struct HabitView: View{
     
     @State private var showingEditForm = false
     
-  
+    @EnvironmentObject var themeManager : ThemeManager
 
     @Binding var selectedTab: Int
     var habitCount: Int
@@ -75,24 +75,24 @@ struct HabitView: View{
                 HStack(alignment: .lastTextBaseline){
                     Text("Days Locked")
                         .font(.pretendard(fontStyle: .headline, fontWeight: .semibold))
-                        .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4, opacity: 1.0))
+                        .foregroundColor(themeManager.habitStatus)
                     Text("0")
                         .padding(.trailing, 20)
                         .font(.pretendard(size: 44, weight: .regular))
-                        .foregroundColor(Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 1.0))
+                        .foregroundColor(themeManager.textColor)
                     Text("Lock Goal")
                         .padding(.leading, 20)
                         .font(.pretendard(fontStyle: .headline, fontWeight: .semibold))
-                        .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4, opacity: 1.0))
+                        .foregroundColor(themeManager.habitStatus)
                     Text("\(habit.streakGoal)")
                         .font(.pretendard(size: 64, weight: .regular))
-                        .foregroundColor(Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 1.0))
+                        .foregroundColor(themeManager.textColor)
                     
                 }
                 .padding(.bottom, 0)
                 
                 Rectangle()
-                    .fill(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 1.0))
+                    .fill(themeManager.controlRect)
                     .frame(height: 2)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
@@ -103,7 +103,7 @@ struct HabitView: View{
                     GeometryReader { geo in
                         ZStack{
                             Circle()
-                                .fill(isCompletedToday ? .red : Color(red: 0.15, green: 0.15, blue: 0.15, opacity: 1.0))
+                                .fill(isCompletedToday ? .red : themeManager.lockButton)
                                 .frame(width: geo.size.width * 0.85, height: geo.size.width * 0.85) // limit max size if you want
                                 .position(x: geo.size.width / 2, y: geo.size.height / 2) // center the circle inside its geometry reader
                                 .padding(.bottom, 10)
@@ -133,6 +133,7 @@ struct HabitView: View{
                             Text(isCompletedToday ? "UnLock" : "Lock")
                                 .font(.pretendard(fontStyle: .title3, fontWeight: .semibold))
                                 .foregroundColor(Color.white)
+                                .allowsHitTesting(false)
                         }
                         
                             
@@ -141,7 +142,7 @@ struct HabitView: View{
                     
                     
                     Rectangle()
-                        .fill(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 1.0))
+                        .fill(themeManager.controlRect)
                         .frame(width: 2)
                         .frame(maxHeight: .infinity)
                     
@@ -195,7 +196,7 @@ struct HabitView: View{
                                 showingEditForm = true
                             }) {
                                 Image(systemName: "ellipsis")
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(themeManager.textColor)
                                     .font(.largeTitle)
                                     // Small fixed frame for tap area roughly the icon size
                                     .frame(width: 44, height: 44)
@@ -228,7 +229,7 @@ struct HabitView: View{
             
         }
         
-        .background(Color(red: 0.90, green: 0.90, blue: 0.90, opacity: 1.0))
+        .background(themeManager.backgroundColor)
 
     }
     

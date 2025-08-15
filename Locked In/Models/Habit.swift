@@ -43,6 +43,41 @@
             return history[today] ?? false
         }
         
+        var streak: Int {
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: Date())
+            let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+            var streak = 0
+
+            // Step 1: Count consecutive days starting from yesterday
+            for offset in 0..<365 {
+                guard let date = calendar.date(byAdding: .day, value: -offset, to: yesterday) else { break }
+
+                let completed = history.contains { key, value in
+                    value && calendar.isDate(key, inSameDayAs: date)
+                }
+
+                if completed {
+                    streak += 1
+                } else {
+                    break
+                }
+            }
+
+            // Step 2: If today is completed, add it to the streak
+            let todayCompleted = history.contains { key, value in
+                value && calendar.isDate(key, inSameDayAs: today)
+            }
+
+            if todayCompleted {
+                streak += 1
+            }
+
+            return streak
+        }
+        
+        
+        
         enum Frequency: Codable, Equatable {
             case daily
             case everyOtherDay

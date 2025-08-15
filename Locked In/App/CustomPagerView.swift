@@ -45,7 +45,7 @@ struct CustomPagerView<Content: View>: View {
                     }
                     .onEnded { value in
                         let translation = value.translation.width
-                        let threshold = geo.size.width / 10
+                        let threshold = geo.size.width / 20
 
                         if translation < -threshold && currentIndex < totalPages - 1 {
                             currentIndex += 1

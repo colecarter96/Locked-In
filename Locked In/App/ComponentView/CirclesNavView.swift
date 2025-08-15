@@ -13,13 +13,15 @@ struct CirclesNavView : View {
     @Binding var currTab: Int
     var totalPages: Int
     
+    @EnvironmentObject var themeManager : ThemeManager
+    
     var body: some View {
         HStack(spacing: 40) {
             Button {
                 currTab = 0  // +1 because 0 = HomeView
             } label: {
                 Circle()
-                    .fill(currTab == 0 ? Color.black : Color.gray)
+                    .fill(currTab == 0 ? themeManager.circlesSelected : themeManager.circlesNotSel)
                     .frame(width: 8, height: 8)
                     .padding(16)
                     .padding(.horizontal, 20)
@@ -29,10 +31,10 @@ struct CirclesNavView : View {
             
             
             Button {
-                currTab = totalPages - 1  // +1 because 0 = HomeView
+                currTab = 1  // +1 because 0 = HomeView
             } label: {
                 Circle()
-                    .fill(currTab == totalPages - 1 ? Color.black : Color.gray)
+                    .fill(currTab == 1 ? themeManager.circlesSelected : themeManager.circlesNotSel)
                     .frame(width: 8, height: 8)
                     .padding(16)
                     .padding(.horizontal, 20)
