@@ -18,33 +18,61 @@ class HabitStore: ObservableObject {
 
     // MARK: - Load from File
     func loadHabits() {
-        let url = getDocumentsDirectory().appendingPathComponent(saveKey)
-        guard let data = try? Data(contentsOf: url) else {
-            print("No saved habits found.")
+        guard let url = getSharedURL(),
+              let data = try? Data(contentsOf: url) else {
+            print("No saved habits found in shared container.")
             return
         }
 
         do {
             let decoded = try JSONDecoder().decode([Habit].self, from: data)
             self.habits = decoded
-            print("Habits loaded successfully.")
+            print("Habits loaded successfully from shared container.")
         } catch {
             print("Failed to decode habits: \(error)")
         }
     }
 
-    // MARK: - Save to File
     func saveHabits() {
-        let url = getDocumentsDirectory().appendingPathComponent(saveKey)
+        guard let url = getSharedURL() else { return }
 
         do {
             let data = try JSONEncoder().encode(habits)
             try data.write(to: url, options: [.atomic, .completeFileProtection])
-            print("Habits saved successfully.")
+            print("Habits saved successfully to shared container.")
         } catch {
             print("Failed to save habits: \(error)")
         }
     }
+
+//    func loadHabits() {
+//        let url = getDocumentsDirectory().appendingPathComponent(saveKey)
+//        guard let data = try? Data(contentsOf: url) else {
+//            print("No saved habits found.")
+//            return
+//        }
+//
+//        do {
+//            let decoded = try JSONDecoder().decode([Habit].self, from: data)
+//            self.habits = decoded
+//            print("Habits loaded successfully.")
+//        } catch {
+//            print("Failed to decode habits: \(error)")
+//        }
+//    }
+//
+//    // MARK: - Save to File
+//    func saveHabits() {
+//        let url = getDocumentsDirectory().appendingPathComponent(saveKey)
+//
+//        do {
+//            let data = try JSONEncoder().encode(habits)
+//            try data.write(to: url, options: [.atomic, .completeFileProtection])
+//            print("Habits saved successfully.")
+//        } catch {
+//            print("Failed to save habits: \(error)")
+//        }
+//    }
 
     // MARK: - CRUD
     func addHabit(_ habit: Habit) {
@@ -64,9 +92,16 @@ class HabitStore: ObservableObject {
 //    }
 
     // MARK: - Helper
-    private func getDocumentsDirectory() -> URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//    private func getDocumentsDirectory() -> URL {
+////        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.colecarter.LockedIn")?.appendingPathComponent(saveKey)
+//    }
+//
+    
+    private func getSharedURL() -> URL? {
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.colecarter.LockedIn")?.appendingPathComponent(saveKey)
     }
+    
     
     func toggleCompletion(for habit: Habit) {
         guard let index = habits.firstIndex(where: { $0.id == habit.id }) else { return }

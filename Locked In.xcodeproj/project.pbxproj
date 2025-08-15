@@ -6,13 +6,60 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		372D4CA62E4F4EBE0084F388 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372D4CA52E4F4EBE0084F388 /* WidgetKit.framework */; };
+		372D4CA82E4F4EBE0084F388 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 372D4CA72E4F4EBE0084F388 /* SwiftUI.framework */; };
+		372D4CB92E4F4EC00084F388 /* LockedInWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 372D4CA32E4F4EBE0084F388 /* LockedInWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		372D4CB72E4F4EC00084F388 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 376708082E3F6C3100A9A8A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 372D4CA22E4F4EBE0084F388;
+			remoteInfo = LockedInWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		372D4CBE2E4F4EC00084F388 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				372D4CB92E4F4EC00084F388 /* LockedInWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		372D4CA32E4F4EBE0084F388 /* LockedInWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LockedInWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		372D4CA52E4F4EBE0084F388 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		372D4CA72E4F4EBE0084F388 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		372D4CBF2E4F4EF00084F388 /* LockedInWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LockedInWidgetsExtension.entitlements; sourceTree = "<group>"; };
 		376708102E3F6C3100A9A8A9 /* Locked In.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Locked In.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		372D4CBA2E4F4EC00084F388 /* Exceptions for "LockedInWidgets" folder in "LockedInWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 372D4CA22E4F4EBE0084F388 /* LockedInWidgetsExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		372D4C952E4F429F0084F388 /* LockedInWidgets */ = {
+		372D4CA92E4F4EBE0084F388 /* LockedInWidgets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				372D4CBA2E4F4EC00084F388 /* Exceptions for "LockedInWidgets" folder in "LockedInWidgetsExtension" target */,
+			);
 			path = LockedInWidgets;
 			sourceTree = "<group>";
 		};
@@ -24,6 +71,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		372D4CA02E4F4EBE0084F388 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372D4CA82E4F4EBE0084F388 /* SwiftUI.framework in Frameworks */,
+				372D4CA62E4F4EBE0084F388 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3767080D2E3F6C3100A9A8A9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -34,11 +90,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		372D4CA42E4F4EBE0084F388 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				372D4CA52E4F4EBE0084F388 /* WidgetKit.framework */,
+				372D4CA72E4F4EBE0084F388 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		376708072E3F6C3100A9A8A9 = {
 			isa = PBXGroup;
 			children = (
-				372D4C952E4F429F0084F388 /* LockedInWidgets */,
+				372D4CBF2E4F4EF00084F388 /* LockedInWidgetsExtension.entitlements */,
 				376708122E3F6C3100A9A8A9 /* Locked In */,
+				372D4CA92E4F4EBE0084F388 /* LockedInWidgets */,
+				372D4CA42E4F4EBE0084F388 /* Frameworks */,
 				376708112E3F6C3100A9A8A9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				376708102E3F6C3100A9A8A9 /* Locked In.app */,
+				372D4CA32E4F4EBE0084F388 /* LockedInWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,6 +122,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		372D4CA22E4F4EBE0084F388 /* LockedInWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 372D4CBB2E4F4EC00084F388 /* Build configuration list for PBXNativeTarget "LockedInWidgetsExtension" */;
+			buildPhases = (
+				372D4C9F2E4F4EBE0084F388 /* Sources */,
+				372D4CA02E4F4EBE0084F388 /* Frameworks */,
+				372D4CA12E4F4EBE0084F388 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				372D4CA92E4F4EBE0084F388 /* LockedInWidgets */,
+			);
+			name = LockedInWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = LockedInWidgetsExtension;
+			productReference = 372D4CA32E4F4EBE0084F388 /* LockedInWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		3767080F2E3F6C3100A9A8A9 /* Locked In */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3767081E2E3F6C3400A9A8A9 /* Build configuration list for PBXNativeTarget "Locked In" */;
@@ -61,13 +151,14 @@
 				3767080C2E3F6C3100A9A8A9 /* Sources */,
 				3767080D2E3F6C3100A9A8A9 /* Frameworks */,
 				3767080E2E3F6C3100A9A8A9 /* Resources */,
+				372D4CBE2E4F4EC00084F388 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				372D4CB82E4F4EC00084F388 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				372D4C952E4F429F0084F388 /* LockedInWidgets */,
 				376708122E3F6C3100A9A8A9 /* Locked In */,
 			);
 			name = "Locked In";
@@ -87,6 +178,9 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					372D4CA22E4F4EBE0084F388 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					3767080F2E3F6C3100A9A8A9 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -107,11 +201,19 @@
 			projectRoot = "";
 			targets = (
 				3767080F2E3F6C3100A9A8A9 /* Locked In */,
+				372D4CA22E4F4EBE0084F388 /* LockedInWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		372D4CA12E4F4EBE0084F388 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3767080E2E3F6C3100A9A8A9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -122,6 +224,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		372D4C9F2E4F4EBE0084F388 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3767080C2E3F6C3100A9A8A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,7 +240,71 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		372D4CB82E4F4EC00084F388 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 372D4CA22E4F4EBE0084F388 /* LockedInWidgetsExtension */;
+			targetProxy = 372D4CB72E4F4EC00084F388 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		372D4CBC2E4F4EC00084F388 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LockedInWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 97MWT575V3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LockedInWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LockedInWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.colecarter.Locked-In.LockedInWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		372D4CBD2E4F4EC00084F388 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LockedInWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 97MWT575V3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LockedInWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LockedInWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.colecarter.Locked-In.LockedInWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		3767081C2E3F6C3400A9A8A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -256,6 +429,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Locked In/Locked In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Locked In/Preview Content\"";
@@ -286,6 +460,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Locked In/Locked In.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Locked In/Preview Content\"";
@@ -314,6 +489,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		372D4CBB2E4F4EC00084F388 /* Build configuration list for PBXNativeTarget "LockedInWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				372D4CBC2E4F4EC00084F388 /* Debug */,
+				372D4CBD2E4F4EC00084F388 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3767080B2E3F6C3100A9A8A9 /* Build configuration list for PBXProject "Locked In" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

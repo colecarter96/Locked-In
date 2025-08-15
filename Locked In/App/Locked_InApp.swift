@@ -9,14 +9,19 @@ import SwiftUI
 import UserNotifications
 
 class ThemeManager: ObservableObject {
-    @AppStorage("isLightMode") var isLightMode: Bool = false {
-        willSet { objectWillChange.send() } // so the UI updates when toggled
-    }
+//    @AppStorage("isLightMode") var isLightMode: Bool = false {
+//        willSet { objectWillChange.send() } // so the UI updates when toggled
+//    }
+
+    @AppStorage("isLightMode", store: UserDefaults(suiteName: "group.com.colecarter.LockedIn"))
+    var isLightMode: Bool = false
     
-    var cardColor : Color { isLightMode ?  Color(red: 0.90, green: 0.90, blue: 0.90, opacity: 1.0) :  Color(red: 0.10, green: 0.10, blue: 0.10, opacity: 1.0) }
+   
+    
+    var cardColor : Color { isLightMode ?  Color(red: 0.99, green: 0.99, blue: 0.99, opacity: 1.0) :  Color(red: 0.10, green: 0.10, blue: 0.10, opacity: 1.0) }
     var textColor : Color { isLightMode ? .black : .white}
     var habitStatus : Color { .gray }
-    var backgroundColor : Color { isLightMode ? Color(red: 0.99, green: 0.99, blue: 0.99, opacity: 1.0) : Color(red: 0.01, green: 0.01, blue: 0.01, opacity: 1.0)}
+    var backgroundColor : Color { isLightMode ? Color(red: 0.90, green: 0.90, blue: 0.90, opacity: 1.0) : Color(red: 0.01, green: 0.01, blue: 0.01, opacity: 1.0)}
     var lockButton : Color { isLightMode ? Color(red: 0.15, green: 0.15, blue: 0.15, opacity: 1.0) : Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 1.0) }
     var controlRect : Color { isLightMode ? Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 1.0) : Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 1.0)}
     var circlesSelected : Color { isLightMode ?  Color.black : Color.white }
